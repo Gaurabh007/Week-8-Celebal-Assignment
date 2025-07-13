@@ -5,4 +5,5 @@ tensorflow==2.13.0
 matplotlib
 streamlit
 groq
+Groq
 python-dotenv
