@@ -1,5 +1,3 @@
-# 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
-
 import streamlit as st
 from Loan_prediction import LoanAdvisor
 from groq import Groq
@@ -7,7 +5,7 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-# Initialize system and load trained model
+
 advisor = LoanAdvisor(groq_api_key=os.getenv("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"))
 advisor.load_trained_model()
 
@@ -17,7 +15,7 @@ st.title("🏦 Smart Loan Approval Predictor & Chatbot")
 # Create tabs
 tabs = st.tabs(["📋 Predict Loan Status", "🤖 Chat with AI"])
 
-# -------------------- Tab 1: Loan Prediction --------------------
+# ============================================= Tab 1: Loan Prediction ==========================================
 with tabs[0]:
     st.header("Enter Applicant Details")
 
@@ -52,8 +50,8 @@ with tabs[0]:
         result, confidence = advisor.predict_applicant(input_data)
         st.success(f"✅ Prediction: **{result}** (Confidence: {confidence:.2%})")
 
-# -------------------- Tab 2: AI Chatbot --------------------
 
+# ==============================================================================================
 
 st.title("🤖 AI Loan Chatbot")
 
@@ -75,28 +73,25 @@ else:
         with st.chat_message(msg["role"]):
             st.markdown(msg["content"])
 
-    # Chat input at the bottom
+
     user_input = st.chat_input("Type your message here...")
 
     if user_input:
-        # Show user input
         with st.chat_message("user"):
             st.markdown(user_input)
         st.session_state.chat_history.append({"role": "user", "content": user_input})
 
-        # Extract structured data
+
         extracted = advisor.extract_info(user_input)
         if extracted:
             st.session_state.user_data.update(extracted)
 
-        # AI generates response
         with st.chat_message("assistant"):
             with st.spinner("AI is typing..."):
                 reply = advisor.generate_ai_response(user_input, context=str(st.session_state.user_data))
                 st.markdown(reply)
         st.session_state.chat_history.append({"role": "assistant", "content": reply})
 
-        # Predict if enough info is present
         required_fields = advisor.columns_used
         if all(field in st.session_state.user_data for field in required_fields):
             if st.button("📊 Predict Loan Approval"):

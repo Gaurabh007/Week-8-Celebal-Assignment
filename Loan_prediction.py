@@ -184,14 +184,13 @@ Please provide helpful, accurate, and friendly responses about loan applications
 if __name__ == "__main__":
     advisor = LoanAdvisor()
 
-    # Step 1: Load and prepare dataset
-    dataset_path = "data/Training Dataset.csv"  # Replace with your actual dataset path
+
+    dataset_path = "data/Training Dataset.csv" 
     df = advisor.load_data(dataset_path)
     df = advisor.clean_data(df)
     df = advisor.engineer_features(df)
     X, y = advisor.encode_and_scale(df)
 
-    # Step 2: Train and save model
     advisor.train_and_save(X, y)
 
     print("\n✅ Model training complete and saved.")
