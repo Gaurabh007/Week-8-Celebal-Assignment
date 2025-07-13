@@ -5,8 +5,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.metrics import classification_report, confusion_matrix, roc_auc_score
 from tensorflow.keras.models import Sequential, load_model
-from tensorflow.keras.layers import Dense, Dropout
-from tensorflow.keras.layers import Input
+from tensorflow.keras.layers import Dense, Dropout, Input
 import re
 import pickle
 import os
@@ -95,7 +94,7 @@ class LoanAdvisor:
         model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
         return model
 
-    def train_and_save(self, X, y, model_path="loan_model.h5", components_path="preprocessing.pkl"):
+    def train_and_save(self, X, y, model_path="models/loan_model.h5", components_path="models/preprocessing.pkl"):
         X_train, X_val, y_train, y_val = train_test_split(X, y, stratify=y, test_size=0.2, random_state=1)
         model = self.build_model(X_train.shape[1])
         model.fit(X_train, y_train, epochs=30, batch_size=16, validation_data=(X_val, y_val))
