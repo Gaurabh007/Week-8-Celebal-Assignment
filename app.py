@@ -1,6 +1,6 @@
 import streamlit as st
 from Loan_prediction import LoanAdvisor
-from groq import Groq
+import groq 
 import os
 from dotenv import load_dotenv
 load_dotenv()

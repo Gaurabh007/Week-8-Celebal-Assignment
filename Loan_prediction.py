@@ -9,7 +9,8 @@ from tensorflow.keras.layers import Dense, Dropout
 import re
 import pickle
 import os
-from groq import Groq
+import groq
+
 
 class LoanAdvisor:
     def __init__(self, groq_api_key=None):
@@ -22,7 +23,7 @@ class LoanAdvisor:
         api_key = groq_api_key or os.getenv('GROQ_API_KEY')
         if api_key:
             try:
-                self.groq_client = Groq(api_key=api_key)
+                self.groq_client = groq.Groq(api_key=api_key)
                 print("✅ AI Chatbot initialized successfully!")
             except Exception as e:
                 print(f"❌ Failed to initialize AI Chatbot: {e}")
