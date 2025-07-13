@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-advisor = LoanAdvisor(groq_api_key=os.getenv("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"))
+advisor = LoanAdvisor(groq_api_key=os.getenv("GROQ_API_KEY"))
 advisor.load_trained_model()
 
 st.set_page_config(page_title="Loan Approval System", layout="centered")
