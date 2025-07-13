@@ -6,6 +6,7 @@ from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.metrics import classification_report, confusion_matrix, roc_auc_score
 from tensorflow.keras.models import Sequential, load_model
 from tensorflow.keras.layers import Dense, Dropout
+from tensorflow.keras.layers import Input
 import re
 import pickle
 import os
@@ -37,7 +38,7 @@ class LoanAdvisor:
 
     def clean_data(self, df):
         df = df.copy()
-        df.fillna(method='ffill', inplace=True)
+        df.ffill(inplace=True)
         df['Dependents'] = df['Dependents'].replace('3+', '3').astype(float)
         return df
 
@@ -71,9 +72,21 @@ class LoanAdvisor:
 
         return X_scaled, y
 
+    # def build_model(self, input_dim):
+    #     model = Sequential()
+    #     model.add(Dense(64, activation='relu', input_dim=input_dim))
+    #     model.add(Dropout(0.3))
+    #     model.add(Dense(32, activation='relu'))
+    #     model.add(Dropout(0.2))
+    #     model.add(Dense(1, activation='sigmoid'))
+
+    #     model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    #     return model
+
     def build_model(self, input_dim):
         model = Sequential()
-        model.add(Dense(64, activation='relu', input_dim=input_dim))
+        model.add(Input(shape=(input_dim,), name="input_layer"))
+        model.add(Dense(64, activation='relu'))
         model.add(Dropout(0.3))
         model.add(Dense(32, activation='relu'))
         model.add(Dropout(0.2))
